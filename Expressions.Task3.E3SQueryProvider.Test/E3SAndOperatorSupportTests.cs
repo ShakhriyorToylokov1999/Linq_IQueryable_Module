@@ -22,6 +22,7 @@ namespace Expressions.Task3.E3SQueryProvider.Test
         [Fact]
         public void TestAndQueryable()
         {
+            var expectedResponseStr = "\"statements\": [{  \"query\":\" Workstation:(EPRUIZHW006)},{  \"query\":\" Manager:(John*)}]";
             var translator = new ExpressionToFtsRequestTranslator();
             Expression<Func<IQueryable<EmployeeEntity>, IQueryable<EmployeeEntity>>> expression
                 = query => query.Where(e => e.Workstation == "EPRUIZHW006" && e.Manager.StartsWith("John"));
@@ -34,8 +35,9 @@ namespace Expressions.Task3.E3SQueryProvider.Test
               ],
              */
 
-            // todo: create asserts for this test by yourself, because they will depend on your final implementation
-            throw new NotImplementedException("Please implement this test and the appropriate functionality");
+            
+            var translated = translator.Translate(expression);
+            Assert.Equal(expectedResponseStr, translated);
         }
 
         #endregion
